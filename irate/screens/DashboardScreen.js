@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default class Lists extends Component {
+export default class DashboardScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Lists</Text>
+        <Text style={styles.title}>Dashboard</Text>
       </View>
     );
   }

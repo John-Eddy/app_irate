@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default class Explore extends Component {
+export default class HistoryScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Explore</Text>
+        <Text style={styles.title}>Historique</Text>
       </View>
     );
   }
