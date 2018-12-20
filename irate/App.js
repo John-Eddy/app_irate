@@ -1,22 +1,10 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from "react";
+import { Platform, StyleSheet, Text, View } from "react-native";
+import { createRootNavigator } from "./router";
+import { createAppContainer } from "react-navigation";
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up Marc to start working on your app!</Text>
-        <Text>Deuxieme texte</Text>
-      </View>
-    );
-  }
-}
+//const appNavigator = createRootNavigator();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const app = createAppContainer(createRootNavigator());
+
+export default app;
