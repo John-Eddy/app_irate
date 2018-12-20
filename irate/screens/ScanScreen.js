@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import { BarCodeScanner, Permissions } from "expo";
 import { Icon } from "react-native-elements";
+import ScanBrackets from "../components/ScanBrackets";
 
 export default class ScanScreen extends Component {
   state = {
-    hasCameraPermission: null
+    hasCameraPermission: null,
+    lastScanned: null,
+    searchingItem: false
   };
 
   async componentDidMount() {
@@ -29,17 +32,37 @@ export default class ScanScreen extends Component {
           onBarCodeScanned={this.handleBarCodeScanned}
           style={styles.preview}
         >
-          <View style={styles.scanBorderContainer}>
-            <View style={styles.scanBorderLeft} />
-            <View style={styles.scanBorderRight} />
-          </View>
+          <ScanBrackets />
+          {this.state.lastScanned !== null && (
+            <View
+              style={{
+                backgroundColor: "#2D2D2D",
+                color: "#ffffff",
+                padding: 20
+              }}
+            >
+              <Text style={{ color: "#FFFFFF" }}>
+                {this.state.searchingItem ? (
+                  <ActivityIndicator size="large" color="#ffffff" />
+                ) : (
+                  this.state.lastScanned
+                )}
+              </Text>
+            </View>
+          )}
         </BarCodeScanner>
       </View>
     );
   }
 
   handleBarCodeScanned = ({ type, data }) => {
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    if (this.state.lastScanned !== data) {
+      this.setState({ searchingItem: true });
+      setTimeout(() => {
+        this.setState({ lastScanned: data, searchingItem: false });
+      }, 2500);
+    }
+    //alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
 }
 
