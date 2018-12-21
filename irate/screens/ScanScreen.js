@@ -3,11 +3,12 @@ import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import { BarCodeScanner, Permissions } from "expo";
 import { Icon } from "react-native-elements";
 import ScanBrackets from "../components/ScanBrackets";
+import Overbox from "../components/Overbox";
 
 export default class ScanScreen extends Component {
   state = {
     hasCameraPermission: null,
-    lastScanned: null,
+    lastScanned: "message test",
     searchingItem: false
   };
 
@@ -34,21 +35,15 @@ export default class ScanScreen extends Component {
         >
           <ScanBrackets />
           {this.state.lastScanned !== null && (
-            <View
-              style={{
-                backgroundColor: "#2D2D2D",
-                color: "#ffffff",
-                padding: 20
-              }}
-            >
-              <Text style={{ color: "#FFFFFF" }}>
-                {this.state.searchingItem ? (
-                  <ActivityIndicator size="large" color="#ffffff" />
-                ) : (
-                  this.state.lastScanned
-                )}
-              </Text>
-            </View>
+            <Overbox>
+              {this.state.searchingItem ? (
+                <ActivityIndicator size="large" color="#020202" />
+              ) : (
+                <Text style={{ color: "#020202" }}>
+                  {this.state.lastScanned}
+                </Text>
+              )}
+            </Overbox>
           )}
         </BarCodeScanner>
       </View>
@@ -75,41 +70,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
-  },
-  scanBorderContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  scanBorderLeft: {
-    height: 200,
-    width: 50,
-    borderWidth: 4,
-    borderColor: "#ffffff",
-    borderRadius: 5,
-    margin: 100,
-    borderRightWidth: 0
-  },
-  scanBorderRight: {
-    height: 200,
-    width: 50,
-    borderWidth: 4,
-    borderColor: "#ffffff",
-    borderRadius: 5,
-    margin: 100,
-    borderLeftWidth: 0
   }
 });
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: "center",
-//     alignItems: "center",
-//     backgroundColor: "#F5FCFF"
-//   },
-//   title: {
-//     fontSize: 20,
-//     textAlign: "center",
-//     margin: 10
-//   }
-// });

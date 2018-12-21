@@ -28,20 +28,22 @@ const styles = StyleSheet.create({
   },
   scanBorderLeft: {
     height: 200,
-    width: 50,
-    borderWidth: 4,
+    width: 40,
+    borderWidth: 2,
     borderColor: "#ffffff",
     borderRadius: 5,
-    margin: 100,
+    margin: 10,
+    marginRight: 100,
     borderRightWidth: 0
   },
   scanBorderRight: {
     height: 200,
-    width: 50,
-    borderWidth: 4,
+    width: 40,
+    borderWidth: 2,
     borderColor: "#ffffff",
     borderRadius: 5,
-    margin: 100,
+    margin: 10,
+    marginLeft: 100,
     borderLeftWidth: 0
   }
 });
