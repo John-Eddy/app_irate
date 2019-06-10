@@ -1,10 +1,25 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+
 import { createRootNavigator } from "./router";
-import { createAppContainer } from "react-navigation";
+import { createAppContainer, createStackNavigator, createSwitchNavigator } from "react-navigation";
+import LoginScreen from "./screens/auth/LoginScreen";
+import AuthLoadingScreen from "./screens/auth/AuthLoginScreen";
 
-//const appNavigator = createRootNavigator();
 
-const app = createAppContainer(createRootNavigator());
 
-export default app;
+  const appStack = createRootNavigator();
+  
+  const authStack = createStackNavigator({ Login: LoginScreen });
+
+  export default createAppContainer(createSwitchNavigator(
+    {
+      AuthLoading: AuthLoadingScreen,
+      App: appStack,
+      Auth: authStack,
+    },
+    {
+      initialRouteName: 'AuthLoading', 
+    }
+  ));
+
+
