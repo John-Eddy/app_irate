@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {View, Button, AsyncStorage} from 'react-native';
+import * as appConst from '../../appConst';
 
 export default class SignInScreen extends Component {
     static navigationOptions = {
@@ -17,9 +18,25 @@ export default class SignInScreen extends Component {
     };
   
     _signInAsync = async (email) => {
-      console.log('singin : ' + email)
+      console.log('singin : ' + email );
+      console.log(appConst.API_URL + 'login/' + email);
+      await fetch(url)
+          .then( (response) => {
+            console.log(response);
+          })    
+          .then((responseJson) => {
+            console.log(responseJson)
+            
+            this.setState({  article: responseJson, searchingArticle: false });
+          })
+          .catch(response => {
+            console.log("erreur : ");
+            console.log(response)
+             this.setState({ searchingArticle: false });
+          })
 
       await AsyncStorage.setItem('userToken', email);
+      
       console.log('SAVING')
       this.props.navigation.navigate('App');
     }; 
@@ -29,8 +46,10 @@ export default class SignInScreen extends Component {
       const {usersList} = this.state; 
       const userPicker = [];
 
-      for(email of usersList) {
-        userPicker.push(<Button title={email} onPress={() => this._signInAsync(email)} /> )
+      for(let email of usersList) {
+        console.log(email);
+        let but = <Button title={email} onPress={() => this._signInAsync(email)} /> ;
+        userPicker.push(but)
       }
       return (
         <View>

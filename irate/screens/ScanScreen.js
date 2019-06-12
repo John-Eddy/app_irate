@@ -4,6 +4,7 @@ import { BarCodeScanner, Permissions } from "expo";
 import { Icon } from "react-native-elements";
 import ScanBrackets from "../components/ScanBrackets";
 import Overbox from "../components/Overbox";
+import * as appConst from "../appConst";
 
 export default class ScanScreen extends Component {
 
@@ -26,7 +27,7 @@ export default class ScanScreen extends Component {
 
       this.setState({ searchingArticle: true, lastScanned: data });
 
-        const url = 'http://10.0.2.2/admin_irate/public/api/searchArticle/' + data;
+        const url = appConst.API_URL + '/searchArticle/' + data;
         console.log(url)
         fetch(url)
           .then((response) => response.json())
