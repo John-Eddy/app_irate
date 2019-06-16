@@ -6,7 +6,7 @@ import { Icon } from "react-native-elements";
 export default class BookcaseItem extends Component {
   _onEditBook = () => {
     let id = this.props.id;
-    this.props.navigation.navigate("EditBook", { id: id });
+    this.props.navigation.navigate("Article", { id: id });
   };
   render() {
     return (

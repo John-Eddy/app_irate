@@ -5,11 +5,12 @@ import { createMaterialBottomTabNavigator } from "react-navigation-material-bott
 import { Icon } from "react-native-elements";
 
 import FavoriteScreen from "./screens/FavoriteScreen";
-import EditBook from "./screens/EditBook";
 import DashboardScreen from "./screens/DashboardScreen";
 import ScanScreen from "./screens/ScanScreen";
 import HistoryScreen from "./screens/HistoryScreen";
 import Profile from "./screens/Profile";
+import ArticleScreen from "./screens/ArticleScreen";
+
 
 let screen = Dimensions.get("window");
 
@@ -91,16 +92,32 @@ export const FavoriteStack = createStackNavigator({
       header: null
     })
   },
-  EditBook: {
-    screen: EditBook,
+  Article: {
+    screen: ArticleScreen,
     navigationOptions: ({ navigation }) => ({
-      header: null,
+      header: false,
       tabBarVisible: false,
       gesturesEnabled: false
     })
   }
 });
 
+const ScanStack = createStackNavigator({
+  Scan: {
+    screen: ScanScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
+  },
+  Article: {
+    screen: ArticleScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: false,
+      tabBarVisible: false,
+      gesturesEnabled: false
+    })
+  }
+});
 export const createRootNavigator = () => {
   return createStackNavigator(
     {

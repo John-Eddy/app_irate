@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
+import { StyleSheet, Text, View, ActivityIndicator, TouchableOpacity, AsyncStorage} from "react-native";
 import { BarCodeScanner, Permissions } from "expo";
 import { Icon } from "react-native-elements";
 import ScanBrackets from "../components/ScanBrackets";
@@ -14,26 +14,30 @@ export default class ScanScreen extends Component {
       lastScanned: "message test",
       searchingArticle: false,
       article: null,
+      user: null
     };
 
   async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === "granted" });
+
+    const userJson = await AsyncStorage.getItem('user');
+    const user = JSON.parse(userJson);
+    this.setState({user: user});
+
   }
 
   handleBarCodeScanned = ({ type, data }) => {
     
-    if (!this.state.searchingArticle) {
+    if (!this.state.searchingArticle && data != this.state.lastScanned) {
 
       this.setState({ searchingArticle: true, lastScanned: data });
 
-        const url = appConst.API_URL + '/searchArticle/' + data;
+        const url = appConst.API_URL + 'searchArticle/' + this.state.user.id + "/" + data;
         console.log(url)
         fetch(url)
           .then((response) => response.json())
-          .then((responseJson) => {
-            console.log(responseJson)
-            
+          .then((responseJson) => {            
             this.setState({  article: responseJson, searchingArticle: false });
           })
           .catch(response => {
@@ -43,6 +47,10 @@ export default class ScanScreen extends Component {
           })
     } 
   };
+
+  handlePress = () => {
+    this.props.navigation.navigate("Article", { article: this.state.article })
+  }
 
   render() {
     const { hasCameraPermission, article, searchingArticle } = this.state;
@@ -67,10 +75,12 @@ export default class ScanScreen extends Component {
               <ActivityIndicator size="large" color="#020202" />
             )}
             { article && (
-              <View style={styles.articleInfos}> 
+                  
+                  
+              <TouchableOpacity style={styles.articleInfos} onPress={this.handlePress}> 
                   <Text style={styles.brandName}>{article.brand}</Text>
                   <Text style={styles.articleName}>{article.designation}</Text>
-              </View> 
+              </TouchableOpacity> 
             )}
             </Overbox>
            )}
